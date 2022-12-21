@@ -50,12 +50,18 @@ function PokemonView() {
       ],
     });
 
-    const list_pokemon = JSON.parse(
+    let list_pokemon: Pokemon[] = JSON.parse(
       localStorage.getItem('pokemon_list') || '[]'
     );
 
     if (list_pokemon.includes(pokemon.name)) {
-      localStorage.removeItem(pokemon.name);
+      list_pokemon = list_pokemon.filter(poke =>
+        poke.name !== pokemon.name ? poke.name : null
+      );
+
+      console.log(list_pokemon);
+
+      localStorage.setItem('pokemon_list', JSON.stringify([...list_pokemon]));
     } else {
       localStorage.setItem(
         'pokemon_list',
